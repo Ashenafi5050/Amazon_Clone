@@ -57,6 +57,7 @@ const Header = () => {
             <a href="" className={classes.cart}>
                 <BiCart 
                 size={35} />
+                {/* <img src="../../assets/Images_Amazon/cart.jpg" alt="" /> */}
                 <span>0</span>
             </a>
             {/* Dark Mode Toggle */}
