@@ -4,6 +4,7 @@ import { SlLocationPin } from "react-icons/sl";
 import { BsSearch } from "react-icons/bs";
 import { BiCart } from "react-icons/bi";
 import LowerHeader from './LowerHeader';
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
@@ -18,9 +19,9 @@ const Header = () => {
         {/* <section className={darkMode ? classes.dark_mode : ""}> */}
             <div className={classes.header_container}>
                 <div className={classes.logo_container}>
-                    <a href="#">
+                    <Link to="/" >
                         <img src="https://pngimg.com/uploads/amazon/small/amazon_PNG11.png" alt="Amazon Logo" />
-                    </a>
+                    </Link>
                     <div className={classes.delivery}>
                         <span><SlLocationPin /></span>
                         <div>
@@ -40,26 +41,26 @@ const Header = () => {
         </div>
         {/* right side link */}
         <div className={classes.order_container}>
-            <a href="" className={classes.language}>
+            <Link to="" className={classes.language}>
             <img src="https://image.shutterstock.com/image-vector/usa-flag-icons-vector-set-260nw-2491312125.jpg" alt="USA_Flag" />
             <select name="" id="">
                 <option value="">EN</option>
             </select> 
-            </a>
-            <a href="" >
+            </Link>
+            <Link to="" >
                 <p>Sign In</p>
                 <span>Account & Lists</span>
-            </a>
-            <a href="" >
+            </Link>
+            <Link to="/Orders" >
                 <p>Returns</p>
                 <span>& Orders</span>
-            </a>
-            <a href="" className={classes.cart}>
+            </Link>
+            <Link to="/cart" className={classes.cart}>
                 <BiCart 
                 size={35} />
                 {/* <img src="../../assets/Images_Amazon/cart.jpg" alt="" /> */}
                 <span>0</span>
-            </a>
+            </Link>
             {/* Dark Mode Toggle */}
             {/* <button onClick={toggleDarkMode} className={classes.dark_mode_btn}>
                 {darkMode ? "Light Mode" : "Dark Mode"}

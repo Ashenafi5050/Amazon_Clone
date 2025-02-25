@@ -1,16 +1,21 @@
-import React from "react";
-import Header from "./Components/Headers/Header.jsx";
-import Carousel from "./Components/Carousel/Carousel.jsx";
-import Category from "./Components/Category/Category.jsx";
-import Product from "./Components/Products/Product.jsx";
+// import React from "react";
+import { BrowserRouter } from "react-router-dom";
+// import Header from "./Components/Headers/Header.jsx";
+import Routing from "./Router.jsx"; // Import the Routing component
+// import { Carousel } from "react-responsive-carousel";
+// import Category from "./Components/Category/Category.jsx";
+// import Product from "./Components/Products/Product.jsx";
 
 const App = () => {
   return (
     <>
-      <Header />
+      {/* <Header />
       <Carousel />
       <Category />
-      <Product />
+      <Product /> */}
+      <BrowserRouter>
+      <Routing />
+    </BrowserRouter>
     </>
   );
 };
