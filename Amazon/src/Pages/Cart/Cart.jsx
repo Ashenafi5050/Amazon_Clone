@@ -1,4 +1,3 @@
-// import React from 'react'
 import classes from "./Cart.module.css";
 import Layout from "../../Components/Layout/Layout";
 import { useContext } from "react";
@@ -6,14 +5,30 @@ import ProductCard from "../../Components/Products/ProductCard";
 import { DataContext } from "../../Components/DataProvider/DataProvider";
 import CurrencyFormat from "../../Components/CurrencyFormat/CurrencyFormat";
 import { Link } from "react-router-dom";
-import { IoIosArrowUp } from "react-icons/io";
-import { IoIosArrowDown } from "react-icons/io";
+import { Type } from "../../Utility/action.type";
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 const Cart = () => {
-  const [{ basket, user }, dispatch] = useContext(DataContext);
-  const total = basket?.reduce((amount, item) => amount + item.price, 0);
-  console.log(basket);
-  
+  const [{ basket }, dispatch] = useContext(DataContext);
+
+  const total = basket?.reduce((amount, product) => {
+    return product.price * product.amount + amount;
+  }, 0);
+
+  const increment = (product) => {
+    dispatch({
+      type: Type.ADD_TO_BASKET,
+      item: product, // Corrected `item` reference
+    });
+  };
+
+  const decrement = (id) => {
+    dispatch({
+      type: Type.REMOVE_FROM_BASKET,
+      id, // Pass only `id`
+    });
+  };
+
   return (
     <Layout>
       <section className={classes.container}>
@@ -23,41 +38,40 @@ const Cart = () => {
           <hr />
 
           {basket?.length === 0 ? (
-            <p>Your cart is empty</p>
+            <p>OOPS! 😊 Your cart is empty</p>
           ) : (
-            basket?.map((product, index) => (
-              <>
-                <section className={classes.cart_product}>
-                  <ProductCard
-                    key={index}
-                    product={product}
-                    renderDescription={true}
-                    renderAdd={false}
-                    flex={true}
-                  />
+            basket.map((item, index) => (
+              <section key={item.id} className={classes.cart_product}>
+                <ProductCard
+                  key={index}
+                  product={item}
+                  renderDesc={true}
+                  renderAdd={false}
+                  flex={true}
+                />
 
-                  <div className={classes.btn_container}>
-                    {/* <button
-                      className={classes.btn}
-                      onClick={() => increment(product)}
-                    >
-                      <IoIosArrowUp size={25} />
-                    </button>
-                    <span>{product.amount}</span>
-                    <button
-                      className={classes.btn}
-                      onClick={() => decrement(item.id)}
-                    >
-                      <IoIosArrowDown size={25} />
-                    </button> */}
-                  </div>
-                </section>
-              </>
+                <div className={classes.btn_container}>
+                  <button
+                    className={classes.btn}
+                    onClick={() => increment(item)}
+                  >
+                    <IoIosArrowUp size={25} />
+                  </button>
+                  <span>{item.amount}</span>
+                  <button
+                    className={classes.btn}
+                    onClick={() => decrement(item.id)}
+                  >
+                    <IoIosArrowDown size={25} />
+                  </button>
+                </div>
+              </section>
             ))
           )}
         </div>
+
         {basket?.length !== 0 && (
-          <div className={`${classes.subtotal} `}>
+          <div className={classes.subtotal}>
             <div>
               <p>Subtotal ({basket.length} items)</p>
               <CurrencyFormat amount={total} />

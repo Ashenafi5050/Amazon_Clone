@@ -16,13 +16,28 @@ export const reducer = (state, action) => {
                 };
             } else {
                 const updatedBasket = state.basket.map((item) =>
-                    item.id === action.item.id ? { ...item, amount: item.amount + 1 } : item
+                    item.id === action.item.id 
+                        ? { ...item, amount: item.amount + 1 } 
+                        : item
                 );
+
                 return {
                     ...state,
                     basket: updatedBasket
                 };
             }
+
+        case Type.REMOVE_FROM_BASKET:
+            return {
+                ...state,
+                basket: state.basket
+                    .map(item => 
+                        item.id === action.id 
+                            ? { ...item, amount: item.amount - 1 } 
+                            : item
+                    )
+                    .filter(item => item.amount > 0) // Remove item if amount reaches 0
+            };
 
         default:
             return state;
