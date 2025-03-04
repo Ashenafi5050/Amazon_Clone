@@ -1,4 +1,4 @@
-import { Type } from './action.type.js';
+import { Type } from './action.type.type';
 
 export const initialState = {
     basket: []
