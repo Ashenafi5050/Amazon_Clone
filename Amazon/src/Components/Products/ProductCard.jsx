@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Rating from "@mui/material/Rating";
 import CurrencyFormat from "../CurrencyFormat/CurrencyFormat";
 import classes from "./product.module.css";
-import { Type } from "../../Utility/action.type.type";
+import { Type } from "../../Utility/action.type.type.js";
 import { DataContext } from "../DataProvider/DataProvider";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function ProductCard({ product, flex, renderDesc, renderAdd }) {
   const { image, title, id, rating, price, description } = product;
   const [state, dispatch] = useContext(DataContext);
 
-  console.log(state);
+  // console.log(state);
 
   const addToCart = () => {
     dispatch({

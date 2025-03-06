@@ -1,7 +1,8 @@
-import { Type } from './action.type.type';
+import { Type } from './action.type.type.js';
 
 export const initialState = {
-    basket: []
+    basket: [],
+    user: null
 };
 
 export const reducer = (state, action) => {
@@ -36,8 +37,14 @@ export const reducer = (state, action) => {
                             ? { ...item, amount: item.amount - 1 } 
                             : item
                     )
-                    .filter(item => item.amount > 0) // Remove item if amount reaches 0
+                    .filter(item => item.amount > 0) 
             };
+
+            case Type.SET_USER:
+                return{
+                    ...state,
+                    user:action.user
+                }
 
         default:
             return state;

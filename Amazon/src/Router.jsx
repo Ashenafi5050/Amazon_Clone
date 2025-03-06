@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./Pages/Landing/Landing.jsx";
-import Auth from "./Pages/Auth/SignUp.jsx";
+import Auth from "./Pages/Auth/Auth.jsx";
 import Payment from "./Pages/Payment/Payment.jsx";
 import Orders from "./Pages/Orders/Orders.jsx";
 import Cart from "./Pages/Cart/Cart.jsx";
