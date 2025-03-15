@@ -1,4 +1,4 @@
-import { Type } from './action.type.type.js';
+import { Type } from "./action.type.js";
 
 export const initialState = {
     basket: [],
@@ -16,15 +16,13 @@ export const reducer = (state, action) => {
                     basket: [...state.basket, { ...action.item, amount: 1 }]
                 };
             } else {
-                const updatedBasket = state.basket.map((item) =>
-                    item.id === action.item.id 
-                        ? { ...item, amount: item.amount + 1 } 
-                        : item
-                );
-
                 return {
                     ...state,
-                    basket: updatedBasket
+                    basket: state.basket.map((item) =>
+                        item.id === action.item.id
+                            ? { ...item, amount: item.amount + 1 }
+                            : item
+                    )
                 };
             }
 
@@ -32,19 +30,25 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 basket: state.basket
-                    .map(item => 
-                        item.id === action.id 
-                            ? { ...item, amount: item.amount - 1 } 
+                    .map(item =>
+                        item.id === action.id && item.amount > 1
+                            ? { ...item, amount: item.amount - 1 }
                             : item
                     )
-                    .filter(item => item.amount > 0) 
+                    .filter(item => item.amount > 0) // Remove item if amount reaches 0
             };
 
-            case Type.SET_USER:
-                return{
-                    ...state,
-                    user:action.user
-                }
+        case Type.EMPTY_BASKET:
+            return {
+                ...state,
+                basket: []
+            };
+
+        case Type.SET_USER:
+            return {
+                ...state,
+                user: action.user
+            };
 
         default:
             return state;

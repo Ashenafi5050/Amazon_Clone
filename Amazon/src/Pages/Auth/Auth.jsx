@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import classes from "./SignUp.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../../Utility/firebase";
 import {
   signInWithEmailAndPassword,
@@ -8,7 +8,8 @@ import {
 } from "firebase/auth";
 import { CircleLoader } from "react-spinners";
 import { DataContext } from "../../Components/DataProvider/DataProvider";
-import { Type } from "../../Utility/action.type.type.js";
+import { Type } from "../../Utility/action.type.js";
+// import { log } from "console";
 
 function Auth() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,9 @@ function Auth() {
   const [error, setError] = useState("");
   const [{ user }, dispatch] = useContext(DataContext);
   const navigate = useNavigate();
+  const navStateData = useLocation();
+  console.log(navStateData);
+
   const [loading, setLoading] = useState({
     signIn: false,
     signUp: false,
@@ -23,7 +27,11 @@ function Auth() {
 
   const authHandler = async (e) => {
     e.preventDefault();
-    if (e.target.name === "singin") {
+    console.log(e.target.name);
+
+    if (e.target.name === "signin") {
+      console.log("SIGNIN IS TRIGGERED");
+
       //firebase auth
       setLoading({ ...loading, signIn: true });
       signInWithEmailAndPassword(auth, email, password)
@@ -33,7 +41,7 @@ function Auth() {
             user: userInfo.user,
           });
           setLoading({ ...loading, signIn: false });
-          navigate("/");
+          navigate(navStateData?.state?.redirect || "/");
         })
         .catch((err) => {
           setError(err.message);
@@ -48,7 +56,7 @@ function Auth() {
             user: userInfo.user,
           });
           setLoading({ ...loading, signUp: false });
-          navigate("/");
+          navigate(navStateData?.state?.redirect || "/");
         })
         .catch((err) => {
           setError(err.message);
@@ -60,7 +68,7 @@ function Auth() {
   return (
     <section className={classes.login}>
       {/* Logo */}
-      <Link to={"/"} >
+      <Link to={"/"}>
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1206px-Amazon_logo.svg.png"
           alt="Amazon"
@@ -70,6 +78,18 @@ function Auth() {
       {/* form  */}
       <div className={classes.login_container}>
         <h1>Sign In</h1>
+        {navStateData?.state?.msg && (
+          <small
+            style={{
+              padding: "5px",
+              textAlign: "center",
+              color: "red",
+              fontWeight: "bold",
+            }}
+          >
+            {navStateData?.state?.msg}
+          </small>
+        )}
         <form action="">
           <div>
             <label htmlFor="email">Email</label>
