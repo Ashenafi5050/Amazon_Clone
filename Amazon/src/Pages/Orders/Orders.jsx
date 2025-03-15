@@ -6,9 +6,13 @@ import Classes from "./Orders.module.css";
 import ProductCard from "../../Components/Products/ProductCard";
 
 const Orders = () => {
-  const { user } = useContext(DataContext); // Get user from context
+  const [{ user },dispatch] = useContext(DataContext); // Get user from context
   const [orders, setOrders] = useState([]); // State to store orders
-
+  // useEffect (()=> {
+  //   if (){
+      
+  //   }
+  // }, [])
   useEffect(() => {
     if (!user) {
       setOrders([]);
@@ -32,7 +36,8 @@ const Orders = () => {
     // Cleanup listener on unmount
     return () => unsubscribe();
   }, [user]);
-
+  console.log(orders);
+  
   return (
     <LayOut>
       <section className={Classes.container}>
@@ -44,7 +49,7 @@ const Orders = () => {
 
           <div>
             {orders.map((eachOrder) => (
-              <div key={eachOrder.id, index}>
+              <div key={eachOrder.id}>
                 <hr />
                 <p>Order ID: {eachOrder.id}</p>
                 {eachOrder.data.basket?.map((item, index) => (
